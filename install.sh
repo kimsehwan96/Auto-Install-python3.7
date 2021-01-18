@@ -1,5 +1,6 @@
 #!/bin/bash
-#this script will be efficient only with revolution pi or raspberry pi
+#파이썬 3.7.2 버전을 자동으로 설치하는 쉘 스크립트입니다.
+#데비안 계열 리눅스 배포판에서 사용 가능합니다
 
 echo "installing python3.7 start"
 #set -e 
