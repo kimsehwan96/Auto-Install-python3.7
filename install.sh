@@ -4,21 +4,24 @@
 
 echo "installing python3.7 start"
 #set -e 
-sudo apt-get update -y
+apt-get update -y
 if [ $? -ne 0 ]; then
   echo "check your network"
 else
   echo "apt-get update sucess"
 fi
  
-sudo apt-get upgrade -y
+apt-get upgrade -y
 
 if [ $? -ne 0 ]; then
  echo "check you env"
 fi
 
 #install dependencies to build python 
-sudo apt-get install -y libffi-dev libbz2-dev liblzma-dev && sudo apt-get install -y libsqlite3-dev libncurses5-dev libgdbm-dev zlib1g-dev && sudo apt-get install -y libreadline-dev libssl-dev tk-dev build-essential && sudo apt-get install -y libncursesw5-dev libc6-dev openssl git 
+apt-get install -y libffi-dev libbz2-dev liblzma-dev && \
+apt-get install -y libsqlite3-dev libncurses5-dev libgdbm-dev zlib1g-dev && \
+apt-get install -y libreadline-dev libssl-dev tk-dev build-essential && \
+apt-get install -y libncursesw5-dev libc6-dev openssl git 
 
 if [ $? -ne 0 ]; then
  echo "there is somethig missing dependencies to built Python !!"
@@ -45,7 +48,8 @@ sed -i "212s/#//g" $PWD/python_src/Python-3.7.2/Modules/Setup.dist
 sed -i "213s/#//g" $PWD/python_src/Python-3.7.2/Modules/Setup.dist
 sed -i "214s/#//g" $PWD/python_src/Python-3.7.2/Modules/Setup.dist
 
-sudo sh $PWD/python_src/Python-3.7.2/configure
+cd $PWD/python_src/Python-3.7.2/
+sh configure
 
 if [ $? -ne 0 ]; then
   echo "fail configure"
@@ -55,7 +59,7 @@ else
 fi
 
 #we will use 4 cores to bulid Python
-sudo make -j 4
+make -j 4
 
 if [ $? -ne 0 ]; then
   echo "fail make"
@@ -64,7 +68,7 @@ else
   echo "python make success !!"
 fi
 
-sudo make install
+make install
 
 if [ $? -ne 0 ]; then
   echo "fail make install"
@@ -72,6 +76,3 @@ if [ $? -ne 0 ]; then
 else
   echo "python make install success !!"
 fi
-
-sudo rm -rf $PWD/python_src/Python-3.7.2
-sudo rm -rf $PWD/python_src/Python-3.7.2.tar.xz
